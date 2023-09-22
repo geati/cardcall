@@ -1,0 +1,132 @@
+// /* PINOUT:
+// RC522 MODULE    Uno/Nano     MEGA
+// SDA             D10          D9
+// SCK             D13          D52
+// MOSI            D11          D51
+// MISO            D12          D50
+// IRQ             N/A          N/A
+// GND             GND          GND
+// RST             D9           D8
+// 3.3V            3.3V         3.3V
+// */
+
+// /* Include the standard Arduino SPI library */
+// #include <SPI.h>
+
+// /* Include the RFID library */
+// #include <RFID.h>
+
+// /* Include the LiquidCrystal library for the 16x2 LCD display */
+// #include <LiquidCrystal.h>
+// LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+// /* Define the DIO used for the SDA (SS) and RST (reset) pins. */
+// #define SDA_DIO 9
+// #define RESET_DIO 8
+
+// /* Create an instance of the RFID library */
+// RFID RC522(SDA_DIO, RESET_DIO);
+
+// /* Define the LCD pinout */
+// const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+
+// void setup()
+// {
+//     Serial.begin(9600);
+//     lcd.begin(16, 2);
+//     SPI.begin();
+//     RC522.init();
+//     lcd.setCursor(2, 0);
+//     lcd.print("Aproxime seu");
+//     lcd.setCursor(2, 1);
+//     lcd.print("Cartao!");
+// }
+// int aula = 0;
+// int estado = 0;
+// unsigned long tempoAnterior = 0;
+// const long duracaoMensagem = 3000;
+// String ncard;
+
+// void loop()
+// {
+//     unsigned long tempoAtual = millis();
+//     if (estado == 1 && tempoAtual - tempoAnterior >= duracaoMensagem)
+//     {
+//         lcd.clear();
+//         lcd.setCursor(2, 0);
+//         lcd.print("Aproxime seu");
+//         lcd.setCursor(2, 1);
+//         lcd.print("Cartao!");
+//         estado = 0; // Volta para o estado inicial
+//     }
+
+//     if (RC522.isCard())
+//     {
+//         /* Se sim, então obtenha o número de série do cartão */
+//         RC522.readCardSerial();
+//         // Imprime a mensagem "Cartão detectado:"
+//         Serial.println("Cartão detectado:");
+//         // Percorre cada byte do número de série e o imprime em formato decimal
+//         // Imprime novas linhas para formatação
+//         Serial.println();
+//         Serial.println();
+//         ncard = "";
+//         for (int i = 0; i < 5; i++)
+//         {
+//             Serial.print(RC522.serNum[i], DEC);
+//             ncard += String(RC522.serNum[i], DEC);
+//             // Descomente a próxima linha para imprimir o detalhe do cartão em formato hexadecimal
+//             // Serial.print(RC522.serNum[i], HEX);
+//         }
+
+//         // Verifica se o número de série corresponde ao ID específico (1254724954157)
+//         if (ncard == "1254724954157" && aula == 1)
+//         {
+//             // Exibe a mensagem "Presença registrada" no display LCD
+//             String a = "funciona";
+//             Serial.println(a);
+//             lcd.clear();
+//             lcd.setCursor(2, 0);
+//             lcd.print("Boa aula");
+//             lcd.setCursor(2, 1);
+//             lcd.print("Registrado");
+//             lcd.setCursor(0, 1);
+//             estado = 1;               // Muda para o estado de exibição da mensagem
+//             tempoAnterior = millis(); // Inicia o temporizador da mensagem
+//         }
+
+//         if (ncard == "1254724954157" && aula == 0)
+//         {
+//             lcd.clear();
+//             lcd.setCursor(2, 0);
+//             lcd.print("A Aula ainda");
+//             lcd.setCursor(2, 1);
+//             lcd.print("nao comecou!");
+
+//             estado = 1;               // Muda para o estado de exibição da mensagem
+//             tempoAnterior = millis(); // Inicia o temporizador da mensagem
+//         }
+
+//         if (ncard == "21117320129170")
+//         {
+//             lcd.clear();
+//             lcd.setCursor(2, 0);
+//             lcd.print("Boa Aula Prof");
+//             estado = 1;               // Muda para o estado de exibição da mensagem
+//             tempoAnterior = millis(); // Inicia o temporizador da mensagem
+//             aula = 1;
+//         }
+//     }
+
+//     // Aguarda 1000 ms (1 segundo) antes de verificar novamente se há um cartão
+// }
+
+// // Função para verificar se o ID do cartão corresponde ao ID específico
+// bool checkCardID(unsigned long cardID)
+// {
+//     unsigned long readCardID = 0;
+//     for (int i = 0; i < 5; i++)
+//     {
+//         readCardID = (readCardID * 256) + RC522.serNum[i];
+//     }
+//     return (readCardID == cardID);
+// }
