@@ -1,3 +1,7 @@
+// @TODO: só executar callback caso todos os digitos forem lidos,
+//        pois se o cartão for removido antes da leitura de todos
+//        os caracteres, o callback é executado
+
 #include <RFID.h>
 #include <SPI.h>
 
@@ -17,20 +21,15 @@ class Cartao {
   void ler(OperationCallback callback) {
     if (!RC522.isCard()) return;
 
-    RC522.readCardSerial();    
+    RC522.readCardSerial();
     cartao_id = "";
 
     for (int i = 0; i < 5; i++) {
       cartao_id += String(RC522.serNum[i], DEC);
     }
 
-    if (cartao_id_last == cartao_id) {
-        return;
-    }
+    if (cartao_id_last == cartao_id) return;
 
-    // @TODO: só executar callback caso todos os digitos forem lidos,
-    //        pois se o cartão for removido antes da leitura de todos
-    //        os caracteres, o callback é executado
     callback(cartao_id);
     cartao_id_last = cartao_id;
   };
