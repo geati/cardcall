@@ -19,7 +19,7 @@ class Cartao {
             
             RC522.readCardSerial();
             id_cartao = "";  
-
+   
             for (int i = 0; i < 5; i++) {
                 id_cartao += String(RC522.serNum[i], DEC);
             }

@@ -1,4 +1,4 @@
-# Cardcall - Sistema de Controle de Chamada em Sala de Aula
+# Cardcall - Sistema de Controle de Chamada Acessível em Sala de Aula Utilizando RFID
 
 O projeto "Card Call" é uma inovação educacional que visa automatizar o processo de chamada em ambientes escolares, proporcionando uma solução eficiente e tecnologicamente avançada. Através da integração de um dispositivo Arduino em sala de aula, cada aluno recebe um cartão com um identificador único. Quando esse cartão é lido por um leitor RFID, a presença do aluno é registrada automaticamente. Esses registros são enviados ao professor por e-mail no final de cada semana, permitindo a integração fácil e eficaz dos dados no sistema da instituição. Isso não apenas economiza tempo valioso em sala de aula, mas também cria um ambiente educacional mais produtivo e moderno, melhorando o processo de ensino-aprendizagem.
 
